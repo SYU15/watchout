@@ -6,8 +6,14 @@ Feel free to use it if you like. */
 .scoreboard {
   border: 2px solid black;
   padding: 5px;
+  width: 800px;
+  height: 60px;
 }
 
 .gamewindow {
-
+  background-color: '#888';
+  border: 2px solid black;
+  padding: 5px;
+  width: 800px;
+  height: 600px;
 }
