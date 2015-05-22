@@ -1,0 +1,24 @@
+Reimplement this game, referring to the source code as needed. You should have commits that refer to each of these numbered steps.
+
+Draw the enemies in an svg window(game window).
+//create an object that contains all game elements, set svg elements to have own properties
+  - create object that contains all svg elements, storage for properties
+
+//game window will have enemies (svgs), have properties in object
+
+Make it so that the enemies move to a new random location every second using transitions.
+
+//use d3 built in timer to great game loop (while loop that player can escape?)
+//update enemy x-y (generate random), redraw enemy with new x-y
+
+Make a differently-colored dot to represent the player. Make it draggable.
+//game window will also have player (svg)
+//mouseover event
+
+Detect when a enemy touches you.
+//when enemy x-y updated, if check player x-y intersects with enemy (pythagorean)
+
+Keep track of the user's score, and display it.
+//how much time has passed, increment player score (each loop updates player)
+
+Use css3 animations to make the enemies whirling shuriken.
