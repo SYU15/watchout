@@ -22,3 +22,19 @@ Keep track of the user's score, and display it.
 //how much time has passed, increment player score (each loop updates player)
 
 Use css3 animations to make the enemies whirling shuriken.
+
+
+// get player current cx
+// get player current cy
+// get player radius
+
+// for each enemy
+  // get enemy cx
+  // get enemy cy
+  // get enemy radius
+
+// If sqrt(playercx - enemycx squared + playercy - enemycy squared) is < playerR*2
+  // if curScore > highscore
+    // updated high score
+  // set score === 0
+  // collisions+=1
