@@ -93,7 +93,8 @@ var populateEnemies = function(){
   }
 };
 
-var collideCheck = function() {
+var collideCheck = function(){
+d3.selectAll(".enemy").each(function(enemy) {
   var player1 = d3.select(".player");
   var playerCx = parseInt(player1.attr("transform").replace(/[^0-9,]/g, "").split(",")[0]);
   var playerCy = parseInt(player1.attr("transform").replace(/[^0-9,]/g, "").split(",")[1]);
@@ -116,20 +117,32 @@ var collideCheck = function() {
     gameOptions.totalCollisions++;
     d3.select(".totalcollisions").text(gameOptions.totalCollisions);
   }
-}
+  });
+};
 
 var updateAllEnemyPositions = function() {
   d3.selectAll(".enemy").each(function(){
     d3.select(this).transition().duration(3000).ease("bounce")
     .attr("cx", Math.floor(Math.random() * gameWindow.width * 0.8))
     .attr("cy",Math.floor(Math.random() * gameWindow.height * 0.8))
-    // .tween("attr", collideCheck);
+    .attr("fill", randomColor())
   });
 };
 
+// var randomColor = function() {
+//   var r = Math.floor(Math.random() * 255);
+//   var g = Math.floor(Math.random() * 255);
+//   var b = Math.floor(Math.random() * 255);
+//   return "rgb("+r+","+g+","+b+")";
+// }
+
+var colors = ["red","yellow","purple","orange","cyan"];
+var randomColor = function() {
+  return colors[Math.floor(Math.random() * colors.length)];
+}
 var updateScoreboard = function() {
-  gameOptions.currentScore += 100;
   d3.select(".currentscore").text(gameOptions.currentScore);
+  gameOptions.currentScore += 100;
 };
 
 // var acceptKeyboardInput = function(){
@@ -142,26 +155,18 @@ var init = function(){
   populateEnemies();
 };
 
+
 init();
+updateScoreboard();
+collideCheck();
 updateAllEnemyPositions();
+setInterval(updateAllEnemyPositions ,3000);
 var gameLoop = function(){
   return function(){
-    updateAllEnemyPositions();
+    collideCheck();
     updateScoreboard();
-    d3.timer(gameLoop(), gameOptions.speed);
+    d3.timer(gameLoop(), 100);
     return true;
   }
 };
 d3.timer(gameLoop(), gameOptions.speed);
-
-var collideLoop = function(){
-  return function(){
-    collideCheck()
-    d3.timer(collideLoop(), 100);
-    return true;
-  }
-};
-d3.timer(gameLoop(), 100);
-
-
-

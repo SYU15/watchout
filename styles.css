@@ -5,6 +5,7 @@ Feel free to use it if you like. */
 
 body, html {
   font-family: 'Press Start 2P', cursive;
+  background-color: #444;
 }
 
 .scoreboard {
@@ -12,12 +13,13 @@ body, html {
   padding: 5px;
   width: 800px;
   height: 60px;
+  background-color: #888;
 }
 .high, .current, .collisions {
   padding: 2px;
 }
 .gamewindow {
-  background-color: '#888';
+  background-color: #FFF;
   border: 2px solid black;
   padding: 5px;
   width: 800px;
