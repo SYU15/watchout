@@ -47,10 +47,35 @@ var gameWindowSvg = d3.select(".gamewindow").append("svg")
   .attr("width",gameWindow.width)
   .attr("height",gameWindow.height);
 
-// var draggable =
+var drag =
+  d3.behavior.drag()
+  .on("drag", function(){
+    console.log(this);
+    d3.select(this).attr({
+      centerX: d3.event.x,
+      centerY: d3.event.y
+    });
+    // d3.select(this).attr({
+    //   transform: "translate(" + this.centerX + "," + this.centerY +")"
+    // })
+  });
+
+// var drag = function() {
+//   debugger;
 //   d3.behavior.drag()
-//   .origin(Object)
-//   .on("drag", dragmove);
+//   .on("drag", function(){alert("!")});
+//   // .on("dragstart", function(){
+//   //   // debugger;
+//   //   d3.event.sourceEvent.stopPropagation();
+//   // })
+// };
+
+// var movePlayer = function(){
+//     debugger;
+//     d3.select(this)
+//     .attr("cx", d3.event.x)
+//     .attr("cy", d3.event.y);
+// };
 
 var playerSvg = function(){
   gameWindowSvg.append("circle")
@@ -60,10 +85,12 @@ var playerSvg = function(){
   .attr("fill",player.fill)
   .attr("stroke",player.borderColor)
   .attr("stroke-width",player.borderWidth)
-  // .on("click", function(){
+  .attr("class","player")
+  .call(drag)
+  // .classed("draggable", true);
+  // .on("drag", function(){
   //   console.log("clicked player");
   // })
-  // .call(draggable);
 }
 
 var populatePlayers = function(){
@@ -102,6 +129,11 @@ var updateScoreboard = function() {
   gameOptions.currentScore += 100;
   d3.select(".currentscore").text(gameOptions.currentScore);
 };
+
+// var acceptKeyboardInput = function(){
+//   d3.select("body")
+//   .
+// };
 
 var init = function(){
   populatePlayers();
