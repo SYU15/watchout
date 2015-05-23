@@ -15,10 +15,11 @@ var gameWindow = {
 //   borderWidth: 2
 // };
 
-var gameObjects = {
+var gameOptions = {
   highScore: 0,
   currentScore: 0,
-  maxEnemies: 20
+  maxEnemies: 20,
+  speed: 3000
 };
 
 
@@ -46,6 +47,11 @@ var gameWindowSvg = d3.select(".gamewindow").append("svg")
   .attr("width",gameWindow.width)
   .attr("height",gameWindow.height);
 
+// var draggable =
+//   d3.behavior.drag()
+//   .origin(Object)
+//   .on("drag", dragmove);
+
 var playerSvg = function(){
   gameWindowSvg.append("circle")
   .attr("cx",player.centerX)
@@ -54,6 +60,10 @@ var playerSvg = function(){
   .attr("fill",player.fill)
   .attr("stroke",player.borderColor)
   .attr("stroke-width",player.borderWidth)
+  // .on("click", function(){
+  //   console.log("clicked player");
+  // })
+  // .call(draggable);
 }
 
 var populatePlayers = function(){
@@ -75,7 +85,7 @@ var enemySvg = function() {
 }
 
 var populateEnemies = function(){
-  for(var i = 0; i < gameObjects.maxEnemies; i++) {
+  for(var i = 0; i < gameOptions.maxEnemies; i++) {
     enemySvg();
   }
 };
@@ -88,12 +98,27 @@ var updateAllEnemyPositions = function() {
   });
 };
 
+var updateScoreboard = function() {
+  gameOptions.currentScore += 100;
+  d3.select(".currentscore").text(gameOptions.currentScore);
+};
+
 var init = function(){
   populatePlayers();
   populateEnemies();
 };
+
 init();
 updateAllEnemyPositions();
+var gameLoop = function(){
+  return function(){
+    updateAllEnemyPositions();
+    updateScoreboard();
+    d3.timer(gameLoop(), gameOptions.speed);
+    return true;
+  }
+};
+d3.timer(gameLoop(), gameOptions.speed);
 
 
 

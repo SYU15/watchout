@@ -3,13 +3,19 @@
 /* Note: an asteroid image is included in this repo.
 Feel free to use it if you like. */
 
+body, html {
+  font-family: 'Press Start 2P', cursive;
+}
+
 .scoreboard {
   border: 2px solid black;
   padding: 5px;
   width: 800px;
   height: 60px;
 }
-
+.high, .current, .collisions {
+  padding: 2px;
+}
 .gamewindow {
   background-color: '#888';
   border: 2px solid black;
