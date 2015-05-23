@@ -19,7 +19,8 @@ var gameOptions = {
   highScore: 0,
   currentScore: 0,
   maxEnemies: 20,
-  speed: 3000
+  speed: 3000,
+  totalCollisions: 0
 };
 
 
@@ -94,23 +95,26 @@ var populateEnemies = function(){
 
 var collideCheck = function() {
   var player1 = d3.select(".player");
+  var playerCx = parseInt(player1.attr("transform").replace(/[^0-9,]/g, "").split(",")[0]);
+  var playerCy = parseInt(player1.attr("transform").replace(/[^0-9,]/g, "").split(",")[1]);
   var playerR = player.radius;
-  console.log(player.radius);
-  var playerX = parseInt(player1.attr("transform").replace(/[^0-9,]/g, "").split(",")[0]);
-  var playerY = parseInt(player1.attr("transform").replace(/[^0-9,]/g, "").split(",")[1]);
-  var playerCxMin = playerX - playerR;
-  var playerCxMax = playerX + playerR;
-  var playerCyMin = playerY - playerR;
-  var playerCyMax = playerY + playerR;
-
   var currentEnemy = d3.select(this);
-  var currentEnemyCxMin = currentEnemy.attr("cx") - currentEnemy.attr("r");
-  var currentEnemyCxMax = currentEnemy.attr("cx") + currentEnemy.attr("r");
-  var currentEnemyCyMin = currentEnemy.attr("cy") - currentEnemy.attr("r");
-  var currentEnemyCyMax = currentEnemy.attr("cy") + currentEnemy.attr("r");
-  if (playerCxMin > currentEnemyCxMax || playerCxMax < currentEnemyCxMin ||
-  playerCyMin > currentEnemyCyMax || playerCyMax < currentEnemyCyMin) {
-    console.log("collideCheck detected collision");
+  var currentEnemyCx = parseInt(currentEnemy.attr("cx"));
+  var currentEnemyCy = parseInt(currentEnemy.attr("cy"));
+
+  var distanceCx = currentEnemyCx - playerCx;
+  var distanceCy = currentEnemyCy - playerCy;
+  var distance = playerR * 2;
+  var collided = distanceCx* distanceCx + distanceCy * distanceCy <= distance * distance;
+  if(collided) {
+    if (gameOptions.currentScore > gameOptions.highScore) {
+      gameOptions.highScore = gameOptions.currentScore;
+      d3.select(".highscore").text(gameOptions.highScore);
+    }
+    gameOptions.currentScore = 0;
+    d3.select(".currentscore").text(gameOptions.currentScore);
+    gameOptions.totalCollisions++;
+    d3.select(".totalcollisions").text(gameOptions.totalCollisions);
   }
 }
 
@@ -119,7 +123,7 @@ var updateAllEnemyPositions = function() {
     d3.select(this).transition().duration(3000).ease("bounce")
     .attr("cx", Math.floor(Math.random() * gameWindow.width * 0.8))
     .attr("cy",Math.floor(Math.random() * gameWindow.height * 0.8))
-    .tween("attr", collideCheck);
+    // .tween("attr", collideCheck);
   });
 };
 
@@ -150,7 +154,14 @@ var gameLoop = function(){
 };
 d3.timer(gameLoop(), gameOptions.speed);
 
-
+var collideLoop = function(){
+  return function(){
+    collideCheck()
+    d3.timer(collideLoop(), 100);
+    return true;
+  }
+};
+d3.timer(gameLoop(), 100);
 
 
 
