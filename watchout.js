@@ -125,7 +125,7 @@ var updateAllEnemyPositions = function() {
     d3.select(this).transition().duration(3000).ease("bounce")
     .attr("cx", Math.floor(Math.random() * gameWindow.width * 0.8))
     .attr("cy",Math.floor(Math.random() * gameWindow.height * 0.8))
-    .attr("fill", randomColor())
+    .attr("fill", randomColor());
   });
 };
 
@@ -145,10 +145,19 @@ var updateScoreboard = function() {
   gameOptions.currentScore += 100;
 };
 
-// var acceptKeyboardInput = function(){
-//   d3.select("body")
-//   .
-// };
+var acceptKeyboardInput = function(){
+  d3.select("body").on("keydown", function(){
+    if(d3.event.keyCode === 37 || d3.event.keyCode === 65) {
+
+    } else if (d3.event.keyCode === 39 || d3.event.keyCode === 68) {
+
+    } else if (d3.event.keyCode === 38 || d3.event.keyCode === 87) {
+
+    } else if (d3.event.keyCode === 40 d3.event.keyCode === 83) {
+
+    }
+  });
+};
 
 var init = function(){
   populatePlayers();
