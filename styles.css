@@ -25,3 +25,18 @@ body, html {
   width: 800px;
   height: 600px;
 }
+
+.authors {
+  text-align:center;
+  border: 2px solid black;
+  padding: 5px;
+  width: 800px;
+  height: 18px;
+  background-color: #888;
+}
+.title {
+  padding-top:12px;
+  float:right;
+  font-size: 40px;
+  letter-spacing: 5px;
+}
